@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import framework.Level;
 import gameElements.GameObject;
 import gameElements.Player;
+import gameElements.TotemEnemy;
 import javafx.scene.Group;
 import menus.MenuMain;
 
@@ -30,6 +31,7 @@ public class LevelOne extends Level{
 		//creating player
 		super.setPlayer(new Player("./res/Grey.png", 10, 150, 50, 50));
 		super.addMobileObject(super.player);
+		super.addMobileObject(new TotemEnemy("./res/Totem.png", 600, 600, 150, 450, false));
 	}
 
 	@Override

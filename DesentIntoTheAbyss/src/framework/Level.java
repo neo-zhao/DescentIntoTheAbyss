@@ -79,6 +79,12 @@ public abstract class Level {
 	        		for (GameObject o: staticLevelObjects) {
 	        			o.handleCollision(g);
 	        		}
+	        		
+	        		//handles collisions with mobile objects
+	        		for (MobileGameObject o: mobileLevelObjects) {
+	        			if(!(o.equals(g)))
+	        				o.handleCollision(g);
+	        		}
 	        	}
 	        	
 	        	//player.getVelocity().setxComp(.5);
