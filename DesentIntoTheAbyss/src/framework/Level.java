@@ -73,13 +73,12 @@ public abstract class Level {
 	        	
 	        	//update mobile level objects
 	        	for (MobileGameObject g: mobileLevelObjects) {
-	        		g.update(t);
-	        		
 	        		//handles collisions with static objects
 	        		for (GameObject o: staticLevelObjects) {
 	        			o.handleCollision(g, t);
 	        		}
 	        		
+	        		g.update(t);
 	        	}
 	        	
 	        	//update static level objects

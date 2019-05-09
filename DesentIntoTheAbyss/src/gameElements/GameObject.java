@@ -146,14 +146,14 @@ public class GameObject {
 		
 		//checks if top left corner is within this object after motion
 		if (within(g.getPosX() + g.getVelocity().getxComp()*elapsedTime, posX, posX+width) && within(g.getPosY() + g.getVelocity().getyComp()*elapsedTime, posY, posY+height)) {
-			g.setLowerBoundX(g.getPosX());
-			g.setLowerBoundY(g.getPosY());
+			if (g.getLowerBoundX() < g.getPosX()) {g.setLowerBoundX(g.getPosX());}
+			if (g.getLowerBoundY() < g.getPosY()) {g.setLowerBoundY(g.getPosY());}
 			System.out.println("top left corner");
 		}
 		//checks if top right corner is within this object after motion
 		if (within(g.getPosX() + g.getWidth() + g.getVelocity().getxComp()*elapsedTime, posX, posX+width) && within(g.getPosY() + g.getVelocity().getyComp()*elapsedTime, posY, posY+height)) {
-			g.setUpperBoundX(g.getPosX() + g.getWidth());
-			g.setLowerBoundY(g.getPosY());
+			if (g.getUpperBoundX() > g.getPosX() + g.getWidth()) {g.setUpperBoundX(g.getPosX() + g.getWidth());}
+			if (g.getLowerBoundY() < g.getPosY()) {g.setLowerBoundY(g.getPosY());}
 			System.out.println("top right corner");
 		}
 		//checks bottom corners if in air
