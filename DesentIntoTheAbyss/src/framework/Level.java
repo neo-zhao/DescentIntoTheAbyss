@@ -77,8 +77,14 @@ public abstract class Level {
 	        		
 	        		//handles collisions with static objects
 	        		for (GameObject o: staticLevelObjects) {
-	        			o.handleCollision(g);
+	        			o.handleCollision(g, t);
 	        		}
+	        		
+	        	}
+	        	
+	        	//update static level objects
+	        	for (GameObject g: staticLevelObjects) {
+	        		g.update(t);
 	        	}
 	        	
 	        	//player.getVelocity().setxComp(.5);

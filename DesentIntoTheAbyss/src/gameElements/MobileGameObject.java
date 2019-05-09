@@ -13,7 +13,6 @@ import framework.GameConstants;
  */
 public class MobileGameObject extends GameObject{
 	//variable declarations
-	protected double lastTime;
 	protected Vector velocity, acceleration;
 	protected double lowerBoundY, upperBoundY, lowerBoundX, upperBoundX;
 	
