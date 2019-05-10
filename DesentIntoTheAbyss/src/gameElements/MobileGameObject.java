@@ -13,7 +13,6 @@ import framework.GameConstants;
  */
 public class MobileGameObject extends GameObject{
 	//variable declarations
-	protected double lastTime;
 	protected Vector velocity, acceleration;
 	protected double lowerBoundY, upperBoundY, lowerBoundX, upperBoundX;
 	
@@ -120,6 +119,10 @@ public class MobileGameObject extends GameObject{
 		//otherwise, allow the movement
 		else {
 			this.setPosY((int)(super.posY + velocity.getyComp()*elapsedTime));
+			//if target is player, change player state to inAir
+			if (this instanceof Player) {
+				((Player)this).setPlayerState(PlayerState.InAir);
+			}
 		}	
 		
 		//updating velocity

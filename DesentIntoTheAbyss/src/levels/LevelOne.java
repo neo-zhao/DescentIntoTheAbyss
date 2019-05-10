@@ -23,8 +23,8 @@ public class LevelOne extends Level{
 		super(root);
 		
 		//creating static objects
-		super.addStaticObject(new GameObject("./res/DarkGrey.png", 0, 700, 1000, 50));
-		super.addStaticObject(new GameObject("./res/DarkGrey.png", 300, 400, 200, 50));
+		super.addStaticObject(new GameObject("./res/DarkGrey.png", 0, 700, 1200, 50));
+		super.addStaticObject(new GameObject("./res/DarkGrey.png", 300, 550, 200, 50));
 		super.addStaticObject(new GameObject("./res/DarkGrey.png", 500, 200, 200, 50));
 		//creating dynamic objects
 		

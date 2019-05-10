@@ -50,6 +50,7 @@ public class Player extends MobileGameObject{
 	}
 	
 	//*Getters and Setters*//
+	public PlayerState getPlayerState() {return playerState;}
 	public void setPlayerState(PlayerState playerState) {
 		this.playerState = playerState;
 		if (playerState == PlayerState.OnGround) {
@@ -82,7 +83,7 @@ public class Player extends MobileGameObject{
 			playerState = PlayerState.InAir;
 		}
 		
-		//handles dashing: controled by has dash (regain by being on ground) and dash buffer
+		//handles dashing: controlled by has dash (regain by being on ground) and dash buffer
 		if (hasDash == true && GameMain.keyInput.contains("D") && t - lastDash > GameConstants.DASH_BUFFER) {
 			DashState dashState = DashState.None;
 
