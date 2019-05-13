@@ -2,11 +2,10 @@ package levels;
 
 import java.io.FileNotFoundException;
 
-//imports
-import framework.Level;
-import gameElements.GameObject;
-import gameElements.Player;
-import javafx.scene.Group;
+import gameObjects.Level;
+import gameObjects.Platform;
+import gameObjects.Player;
+import javafx.stage.Stage;
 import menus.MenuMain;
 
 public class LevelOne extends Level{
@@ -18,24 +17,22 @@ public class LevelOne extends Level{
 	 * @param stage the stage the level will be displayed on
 	 * @throws FileNotFoundException 
 	 */
-	public LevelOne(Group root) throws FileNotFoundException {
-		super(root);
-		
-		//creating static objects
-		super.addStaticObject(new GameObject("./res/DarkGrey.png", 0, 700, 1200, 50));
-		super.addStaticObject(new GameObject("./res/DarkGrey.png", 300, 550, 200, 50));
-		super.addStaticObject(new GameObject("./res/DarkGrey.png", 500, 200, 200, 50));
-		//creating dynamic objects
+	public LevelOne(Stage stage) throws FileNotFoundException {
+		super(stage);
 		
 		//creating player
 		super.setPlayer(new Player("./res/Grey.png", 10, 150, 50, 50));
-		super.addMobileObject(super.player);
+		
+		//creating game objects
+		super.addGameObject(new Platform(0, 700, 3000, 50));
+		super.addGameObject(new Platform(300, 550, 200, 50));
+		super.addGameObject(new Platform(500, 200, 200, 50));
 	}
 
 	@Override
 	public boolean levelComplete() {
-		if (super.player.getPosX() > 1000) {
-			new MenuMain(root).start();
+		if (this.getPlayer().getPosX() > 3000) {
+			new MenuMain(this.getStage()).start();
 			System.out.println("level one over.");
 			return true;
 		}

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.stage.Stage;
 
 /**
  * <b>Menu</b>
@@ -15,17 +16,17 @@ import javafx.scene.Node;
  */
 public abstract class Menu {
 	//variable declarations
-	protected List<Node> menuObjects;
-	protected Group root;
+	private List<Node> menuObjects;
+	private Group root;
 	
 	//*Constructors*//
 	/**
 	 * <b>Constructor</b>
 	 * <p>initializes the list of menu objects</p>
 	 */
-	public Menu(Group root) {
+	public Menu(Stage stage) {
 		this.menuObjects = new ArrayList<Node>();
-		this.root = root;
+		this.root = (Group) stage.getScene().getRoot();
 		root.getChildren().clear();
 	}
 	

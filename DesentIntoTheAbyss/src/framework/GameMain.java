@@ -1,8 +1,8 @@
 package framework;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-//imports
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,7 +17,7 @@ import menus.MenuMain;
  */
 public class GameMain extends Application{
 	//variable declaration
-	public static ArrayList<String> keyInput = new ArrayList<String>();
+	public static Set<String> keyInput = new HashSet<String>();
 	
 	/**
 	 * It has to start somewhere...
@@ -52,7 +52,7 @@ public class GameMain extends Application{
 	    });
 	    
 	    //start game at the main menu
-		new MenuMain(root).start();
+		new MenuMain(primaryStage).start();
 		
 		//Displaying stage
 		primaryStage.show();

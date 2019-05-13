@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import framework.Menu;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import levels.LevelOne;
 
 public class MenuMain extends Menu{
@@ -12,8 +13,8 @@ public class MenuMain extends Menu{
 	 * <b>Constructor</b>
 	 * <p>implements all the stuff needed for the main menu</p>
 	 */
-	public MenuMain(Group root) {
-		super(root);
+	public MenuMain(Stage stage) {
+		super(stage);
 	
 	    //adding button
 	    Button play = new Button();
@@ -22,7 +23,7 @@ public class MenuMain extends Menu{
 	    play.setText("Play");
 	    play.setOnAction(e -> {
 	    	try {
-				new LevelOne(root).start();
+				new LevelOne(stage).start((Group) stage.getScene().getRoot());
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
