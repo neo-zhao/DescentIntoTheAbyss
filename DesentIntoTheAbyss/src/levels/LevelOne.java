@@ -2,10 +2,12 @@ package levels;
 
 import java.io.FileNotFoundException;
 
+
 //imports
 import framework.Level;
 import gameElements.GameObject;
 import gameElements.Player;
+import gameElements.PlayerBullet;
 import gameElements.TotemEnemy;
 import javafx.scene.Group;
 import menus.MenuMain;
@@ -27,6 +29,10 @@ public class LevelOne extends Level{
 		super.addStaticObject(new GameObject("./res/DarkGrey.png", 300, 550, 200, 50));
 		super.addStaticObject(new GameObject("./res/DarkGrey.png", 500, 200, 200, 50));
 		//creating dynamic objects
+		
+		//testing bullets
+		
+		super.addStaticObject(new PlayerBullet(100,100));
 		
 		//creating player
 		super.setPlayer(new Player("./res/Grey.png", 10, 150, 50, 50));

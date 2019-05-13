@@ -61,6 +61,18 @@ public class Player extends MobileGameObject{
 	//*Other Methods*//
 	@Override
 	public void update(double t) {
+		//handles shooting bullets
+		//TODO how to add bullets onto the screen
+		//TODO "Aim" bullets
+		if(GameMain.keyInput.contains("SPACE")) {
+			try {
+				PlayerBullet p = new PlayerBullet((int)this.getPosX(), (int)this.getPosY());
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		//handles moving right
 		if (GameMain.keyInput.contains("RIGHT")) {
 			super.getVelocity().setxComp(GameConstants.MOVE_SPEED);
@@ -163,5 +175,6 @@ public class Player extends MobileGameObject{
 		//updates movement in accordance to mobile object update
 		super.update(t);
 	}
+	
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import gameElements.GameObject;
 import gameElements.MobileGameObject;
 import gameElements.Player;
+import gameElements.PlayerBullet;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 
@@ -20,6 +21,7 @@ public abstract class Level {
 	//variable declarations
 	protected List<GameObject> staticLevelObjects;
 	protected List<MobileGameObject> mobileLevelObjects;
+	protected List<PlayerBullet> playerBullets;
 	protected Group root;
 	protected Player player;
 	
