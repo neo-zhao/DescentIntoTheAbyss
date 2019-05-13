@@ -20,5 +20,10 @@ public class Camera extends MobileGameObject{
 	public Camera() throws FileNotFoundException {
 		super("./res/White.png", 0, 0, 0, 0, true);
 	}
+
+	@Override
+	protected void handleCollisionAddOn(CollisionState collisionState) {
+		//do nothing
+	}
 	
 }

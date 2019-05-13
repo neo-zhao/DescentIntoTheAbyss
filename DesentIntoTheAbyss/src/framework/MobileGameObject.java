@@ -18,6 +18,7 @@ public abstract class MobileGameObject extends GameObject{
 	private Vector acceleration, velocity;
 	private double lastTime, lowerBoundY, upperBoundY, lowerBoundX, upperBoundX;
 	public static enum MoveState {inAir, onGround;}
+	public static enum CollisionState{top, bottom, left, right;}
 	private MoveState moveState;
 	
 	//*Constructor*//
@@ -88,11 +89,13 @@ public abstract class MobileGameObject extends GameObject{
 		if (this.getPosX() + velocity.getxComp()*elapsedTime < lowerBoundX) {
 			this.setPosX(lowerBoundX + 1);
 			this.getVelocity().setxComp(0);
+			this.handleCollisionAddOn(CollisionState.left);
 		} 
 		//if the movement moves the object past its upper bound for x, limit the movement
 		else if (this.getPosX() + this.getWidth() + velocity.getxComp()*elapsedTime > upperBoundX) {
 			this.setPosX(upperBoundX - this.getWidth() - 1);
 			this.getVelocity().setxComp(0);
+			this.handleCollisionAddOn(CollisionState.right);
 		}
 		//otherwise, allow the movement
 		else {
@@ -103,12 +106,14 @@ public abstract class MobileGameObject extends GameObject{
 		if (this.getPosY() + velocity.getyComp()*elapsedTime < lowerBoundY) {
 			this.setPosY(lowerBoundY + 1);
 			this.getVelocity().setyComp(0);
+			this.handleCollisionAddOn(CollisionState.top);
 		} 
 		//if the movement moves the object past its upper bound for y, limit the movement
 		else if (this.getPosY() + this.getHeight() + velocity.getyComp()*elapsedTime > upperBoundY) {
 			this.setPosY(upperBoundY - this.getHeight() - 1);
 			this.getVelocity().setyComp(0);
 			this.setMoveState(MoveState.onGround);
+			this.handleCollisionAddOn(CollisionState.bottom);
 		}
 		//otherwise, allow the movement
 		else {
@@ -135,4 +140,5 @@ public abstract class MobileGameObject extends GameObject{
 		this.lastTime = currentTime;
 	}
 	
+	protected abstract void handleCollisionAddOn(CollisionState collisionState);
 }

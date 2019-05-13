@@ -173,4 +173,10 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 			}		
 		}
 	}
+
+	@Override
+	protected void handleCollisionAddOn(CollisionState collisionState) {
+		// TODO Auto-generated method stub
+		
+	}
 }	

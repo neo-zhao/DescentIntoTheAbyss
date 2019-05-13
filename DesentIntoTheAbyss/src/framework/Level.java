@@ -4,11 +4,13 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 
+import gameObjects.Bullet;
 import gameObjects.Camera;
 import gameObjects.Player;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.stage.Stage;
+import managers.BulletManager;
 
 /**
  * <b>Level</b>
@@ -23,6 +25,7 @@ public abstract class Level {
 	private Player player;
 	private Stage stage;
 	private double bufferX, bufferY, minX, maxX, minY, maxY;
+	private BulletManager bulletManager;
 	
 	//*Constructors*//
 	public Level(Stage stage) throws FileNotFoundException {
@@ -32,6 +35,7 @@ public abstract class Level {
 		this.stage = stage;
 		this.bufferX = GameConstants.BUFFERX;
 		this.bufferY = GameConstants.BUFFERY;
+		this.bulletManager = new BulletManager();
 		((Group)stage.getScene().getRoot()).getChildren().clear();
 	}
 	
@@ -47,6 +51,7 @@ public abstract class Level {
 	public void setPlayer(Player player) {
 		this.player = player;
 		this.inLevel.add(player);
+		this.bulletManager.handlePlayer(player);
 	}
 	public Stage getStage() {return stage;}
 	
@@ -67,6 +72,19 @@ public abstract class Level {
 	        {
 	        	//calculate level time
 	        	double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+	        	
+	        	//clears bullets
+	        	for (Bullet b: bulletManager.getBullets()) {
+	        		root.getChildren().remove(b.getImage());
+	        	}
+	        	
+	        	//re-adds bullets
+	        	bulletManager.handleInput(t);
+	        	for (Bullet b: bulletManager.getBullets()) {
+	        		root.getChildren().add(b.getImage());
+	        		inLevel.add(b);
+	        	}
+	        	
 	        	
 	        	//update mobile level objects
 	        	for (GameObject g: inLevel) {
