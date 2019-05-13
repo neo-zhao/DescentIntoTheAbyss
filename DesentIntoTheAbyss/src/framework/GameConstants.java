@@ -13,7 +13,7 @@ public class GameConstants {
 	public static final double JUMP_VELO = -0.3*GRAVITY;
 	public static final double DASH_VELO = MOVE_SPEED * 5;
 	public static final double DASH_BUFFER = .5;
-	public static final double SHOOT_BUFFER = 1;
+	public static final double SHOOT_BUFFER = .25;
 	public static final double BULLET_VELO = 5;
 	
 	//old (possibly useless)

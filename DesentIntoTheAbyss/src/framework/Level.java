@@ -21,6 +21,8 @@ import managers.BulletManager;
 public abstract class Level {
 	//variable declarations
 	private Set<GameObject> inLevel;
+	private Set<Bullet> playerBullets;
+	
 	private Camera camera;
 	private Player player;
 	private Stage stage;
@@ -92,6 +94,7 @@ public abstract class Level {
 	        		if (g instanceof MobileGameObject) {
 	        			//reset move bounds
 	        			((MobileGameObject) g).setBounds(minX, maxX, minY, maxY);
+	        			
 	        			
 	        			//handle input if g takes user input
 	        			if (g instanceof UserAffectedGameObject) {

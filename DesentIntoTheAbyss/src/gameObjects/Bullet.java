@@ -17,11 +17,13 @@ public class Bullet extends MobileGameObject{
 	
 	//*Constructors*//
 	public Bullet(double posX, double posY) throws FileNotFoundException {
-		super("./res/Black.png", posX, posY, 10, 10, false);
+		super("./res/Black.png", posX, posY, 10, 10, true);
 		this.viable = true;
 		
 		//sets velocity
 		this.getVelocity().setxComp(GameConstants.BULLET_VELO);
+		this.getVelocity().setyComp(GameConstants.BULLET_VELO);
+		
 	}
 	
 	//*Getters and Setters*//
