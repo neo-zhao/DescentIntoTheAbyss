@@ -38,6 +38,7 @@ public class BulletManager implements PlayerAffectedGameObject, UserAffectedGame
 	public void handleInput(double currentTime) {
 		//adds new bullet if requirements are met
 		if (GameMain.keyInput.contains("S") && currentTime - lastShot > GameConstants.SHOOT_BUFFER) {
+			lastShot = currentTime;
 			try {
 				this.bullets.add(new Bullet(this.player.getPosX() + this.player.getWidth() + 10, this.player.getPosY() + this.player.getHeight()/2));
 			} catch (FileNotFoundException e) {

@@ -56,6 +56,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 			
 			//handles dashing: controlled by has dash (regain by being on ground) and dash buffer
 			this.handleDash(currentTime);
+			
 		}	
 	}	
 	
@@ -173,7 +174,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 			}		
 		}
 	}
-
+	
 	@Override
 	protected void handleCollisionAddOn(CollisionState collisionState) {
 		// TODO Auto-generated method stub
