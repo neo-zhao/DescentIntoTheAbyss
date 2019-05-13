@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 
-import framework.MobileGameObject.MoveState;
 import gameObjects.Camera;
 import gameObjects.Player;
 import javafx.animation.AnimationTimer;
@@ -40,9 +39,9 @@ public abstract class Level {
 	public void addGameObject(GameObject g) {
 		this.inLevel.add(g);
 		if (g.getPosX() < this.minX) {minX = g.getPosX();}
-		if (g.getPosX() > this.maxX) {maxX = g.getPosX();}
+		if (g.getPosX() + g.getWidth() > this.maxX) {maxX = g.getPosX() + g.getWidth();}
 		if (g.getPosY() < this.minY) {minY = g.getPosY();}
-		if (g.getPosY() > this.maxY) {maxY = g.getPosY();}
+		if (g.getPosY() + g.getHeight() > this.maxY) {maxY = g.getPosY() + g.getHeight();}
 	}
 	public Player getPlayer() {return player;}
 	public void setPlayer(Player player) {

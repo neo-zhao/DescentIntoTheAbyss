@@ -52,7 +52,7 @@ public class GameMain extends Application{
 	    });
 	    
 	    //testing
-	    keyInput.add("RIGHT");
+	    //keyInput.add("RIGHT");
 	    
 	    //start game at the main menu
 		new MenuMain(primaryStage).start();
