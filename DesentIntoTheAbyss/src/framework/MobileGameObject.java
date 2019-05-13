@@ -2,6 +2,7 @@ package framework;
 
 import java.io.FileNotFoundException;
 
+import gameObjects.Player;
 import physics.Force;
 import physics.NetForce;
 import physics.Vector;
@@ -16,7 +17,7 @@ public abstract class MobileGameObject extends GameObject{
 	//variable declarations
 	private NetForce forces;
 	private Vector acceleration, velocity;
-	private double lastTime;
+	private double lastTime, lowerBoundY, upperBoundY, lowerBoundX, upperBoundX;
 	public static enum MoveState {inAir, onGround;}
 	private MoveState moveState;
 	
@@ -36,12 +37,18 @@ public abstract class MobileGameObject extends GameObject{
 		//super stuff
 		super(textureFileName, posX, posY, width, height, permeable);
 		
-		//other stuff
+		//physics stuff
 		this.forces = new NetForce();
 		this.acceleration = new Vector(0,0);
 		this.velocity = new Vector(0,0);
 		this.lastTime = 0;
+		
+		//other stuff
 		this.moveState = MoveState.inAir;
+		this.lowerBoundX = 0;
+		this.lowerBoundY = 0;
+		this.upperBoundX = GameConstants.STAGE_WIDTH;
+		this.upperBoundY = GameConstants.STAGE_HEIGHT;
 	}
 
 	//*Getters and Setters*//
@@ -49,8 +56,22 @@ public abstract class MobileGameObject extends GameObject{
 	public Vector getAcceleration() {return acceleration;}
 	public Vector getVelocity() {return velocity;}
 	public double getLastTime() {return lastTime;}
+	public double getLowerBoundX() {return lowerBoundX;}
+	public void setLowerBoundX(double lowerBoundX) {this.lowerBoundX = lowerBoundX;}
+	public double getUpperBoundX() {return upperBoundX;}
+	public void setUpperBoundX(double upperBoundX) {this.upperBoundX = upperBoundX;}
+	public double getLowerBoundY() {return lowerBoundY;}
+	public void setLowerBoundY(double lowerBoundY) {this.lowerBoundY = lowerBoundY;}
+	public double getUpperBoundY() {return upperBoundY;}
+	public void setUpperBoundY(double upperBoundY) {this.upperBoundY = upperBoundY;}
 	public MoveState getMoveState() {return moveState;}
 	public void setMoveState(MoveState moveState) {this.moveState = moveState;}
+	public void setBounds(double xLower, double xUpper, double yLower, double yUpper) {
+		this.lowerBoundX = xLower;
+		this.upperBoundX = xUpper;
+		this.lowerBoundY = yLower;
+		this.upperBoundY = yUpper;
+	}
 	
 	//*Other Methods*//
 	/**
@@ -61,25 +82,55 @@ public abstract class MobileGameObject extends GameObject{
 	public void update(double currentTime) {
 		//calculating elapsedTime
 		double elapsedTime = currentTime - this.lastTime;
-	
-		//updating forces
-		if (this.moveState == MoveState.inAir) {
-			this.forces.addForce("Gravity", new Force(0, GameConstants.GRAVITY, 0, currentTime));
+
+		/*updating position*/
+		//horizontal motion
+		//if the movement moves the object past its lower bound for x, limit the movement
+		if (this.getPosX() + velocity.getxComp()*elapsedTime < lowerBoundX) {
+			this.setPosX(lowerBoundX + 1);
+			this.getVelocity().setxComp(0);
+		} 
+		//if the movement moves the object past its upper bound for x, limit the movement
+		else if (this.getPosX() + this.getWidth() + velocity.getxComp()*elapsedTime > upperBoundX) {
+			this.setPosX(upperBoundX - this.getWidth() - 1);
+			this.getVelocity().setxComp(0);
 		}
-		this.forces.update(currentTime);
+		//otherwise, allow the movement
+		else {
+			this.setPosX(this.getPosX() + velocity.getxComp()*elapsedTime);
+		}
+		//vertical motion
+		//if the movement moves the object past its lower bound for y, limit the movement
+		if (this.getPosY() + velocity.getyComp()*elapsedTime < lowerBoundY) {
+			this.setPosY(lowerBoundY + 1);
+			this.getVelocity().setyComp(0);
+		} 
+		//if the movement moves the object past its upper bound for y, limit the movement
+		else if (this.getPosY() + this.getHeight() + velocity.getyComp()*elapsedTime > upperBoundY) {
+			this.setPosY(upperBoundY - this.getHeight() - 1);
+			this.getVelocity().setyComp(0);
+			this.setMoveState(MoveState.onGround);
+		}
+		//otherwise, allow the movement
+		else {
+			this.setPosY((int)(this.getPosY() + velocity.getyComp()*elapsedTime));
+			this.setMoveState(MoveState.inAir);
+		}	
+		
+		//updating velocity
+		this.velocity.addX(this.acceleration.getxComp()*elapsedTime);
+		this.velocity.addY(this.acceleration.getyComp()*elapsedTime);
 		
 		//updating acceleration
 		Force netForce = this.forces.getNetForce(currentTime);
 		this.acceleration.setxComp(netForce.getVector().getxComp());
 		this.acceleration.setyComp(netForce.getVector().getyComp());
 		
-		//updating velocity
-		this.velocity.addX(this.acceleration.getxComp()*elapsedTime);
-		this.velocity.addY(this.acceleration.getyComp()*elapsedTime);
-		
-		//updating position
-		this.setPosX(this.getPosX() + this.velocity.getxComp()*elapsedTime);
-		this.setPosY(this.getPosY() + this.velocity.getyComp()*elapsedTime);
+		//updating forces
+		this.forces.update(currentTime);
+		if (this.moveState == MoveState.inAir) {
+			this.forces.addForce("Gravity", new Force(0, GameConstants.GRAVITY, 0, currentTime));
+		}
 		
 		//updating last time
 		this.lastTime = currentTime;

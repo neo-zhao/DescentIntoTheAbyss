@@ -86,69 +86,50 @@ public abstract class GameObject {
 	 */
 	public void handleCollision(MobileGameObject g, double currentTime) {	
 		//only handle collisions if this object is not permeable
-		if (!this.permeable && this.hasCollision(g, currentTime)) {
-			//checks for collision with top of this object
-			if (g.getPosY() + g.getHeight() < this.posY) {
-				//update velocity
-				g.getVelocity().setyComp(0);
-				
-				//update position
-				g.setPosY(this.posY - g.getHeight() - 1);
-				
-				//update move state
-				g.setMoveState(MobileGameObject.MoveState.onGround);
+		if (!this.permeable) {
+			//if horizontal motion of the object results in a possible collision
+			if (Calculations.hasOverlap(posY, posY + height, g.getPosY(), g.getPosY() + g.getHeight())) {
+				//if the target is to the left of this object
+				if (g.getPosX() <= posX && g.getUpperBoundX() > posX - GameConstants.HITBOX_BUFFER) {
+					g.setUpperBoundX(posX - GameConstants.HITBOX_BUFFER);
+				}
+				//if the target is to the right of this object
+				if (g.getPosX() > posX + width && g.getLowerBoundX() < posX + width + GameConstants.HITBOX_BUFFER) {
+					g.setLowerBoundX(posX + width + GameConstants.HITBOX_BUFFER);
+				}
 			}
-			//checks for collision with bottom of this object
-			if (g.getPosY() > this.posY + this.height) {
-				//update velocity
-				g.getVelocity().setyComp(0);
-				
-				//update position
-				g.setPosY(this.posY + 1);
+			//if vertical motion of the object results in a possible collision
+			if (Calculations.hasOverlap(posX, posX + width, g.getPosX(), g.getPosX() + g.getWidth())) {
+				//if the target is above this object
+				if (g.getPosY() <= posY && g.getUpperBoundY() > posY - GameConstants.HITBOX_BUFFER) {
+					g.setUpperBoundY(posY - GameConstants.HITBOX_BUFFER);
+				}
+				//if the target is below this object
+				if (g.getPosY() > posY + height && g.getLowerBoundY() < posY + height + GameConstants.HITBOX_BUFFER) {
+					g.setLowerBoundY(posY + height + GameConstants.HITBOX_BUFFER);
+					//System.out.println("lower bound: " + (posY + height + GameConstants.HITBOX_BUFFER));
+				}
 			}
-			//check for collision with left of this object
-			if (g.getPosX() + g.getWidth() < this.posX) {
-				//update velocity
-				g.getVelocity().setxComp(0);
-				
-				//update position
-				g.setPosY(this.posX - g.getWidth() - 1);
+			
+			//calculate elapsed time
+			double elapsedTime = currentTime - g.getLastTime();
+			
+			/*corner cases*/
+			
+			//checks if top left corner is within this object after motion
+			if (Calculations.isBetween(posX, posX+width,g.getPosX() + g.getVelocity().getxComp()*elapsedTime) && 
+					Calculations.isBetween(posY, posY+height, g.getPosY() + g.getVelocity().getyComp()*elapsedTime)) {
+				if (g.getLowerBoundX() < g.getPosX()) {g.setLowerBoundX(g.getPosX());}
+				if (g.getLowerBoundY() < g.getPosY()) {g.setLowerBoundY(g.getPosY());}
+				System.out.println("top left corner");
 			}
-			//check for collision with right of this object
-			if (g.getPosX() > this.posX + this.height) {
-				//update velocity
-				g.getVelocity().setxComp(0);
-				
-				//update position
-				g.setPosY(this.posX + 1);
-			}
-		}
-	}
-	
-	/**
-	 * <b>has Collision</b>
-	 * <p>returns true if g will collide with this game object</p>
-	 * @param g the mobile game object that is being tested
-	 * @param currentTime the current time (level time)
-	 * @return true if there is a collision
-	 */
-	private boolean hasCollision(MobileGameObject g, double currentTime) {
-		//calculate elapsedTime
-		double elapsedTime = currentTime - g.getLastTime();
-		
-		//checks for horizontal overlap
-		if (Calculations.hasOverlap(this.posX, this.posX + this.height, 
-				g.getPosX() + g.getVelocity().getxComp()*elapsedTime, 
-				g.getPosX() + g.getVelocity().getxComp()*elapsedTime + g.getHeight())) {
-			//System.out.println("horizontal overlap");
-			//checks for vertical overlap
-			if (Calculations.hasOverlap(this.posY, this.posY + this.width, 
-					g.getPosY() + g.getVelocity().getyComp()*elapsedTime, 
-					g.getPosY() + g.getVelocity().getyComp()*elapsedTime + g.getWidth())) {
-				System.out.println("vertical overlap");
-				return true;
+			//checks if top right corner is within this object after motion
+			if (Calculations.isBetween(posX, posX+width, g.getPosX() + g.getWidth() + g.getVelocity().getxComp()*elapsedTime) &&
+					Calculations.isBetween(posY, posY+height, g.getPosY() + g.getVelocity().getyComp()*elapsedTime)) {
+				if (g.getUpperBoundX() > g.getPosX() + g.getWidth()) {g.setUpperBoundX(g.getPosX() + g.getWidth());}
+				if (g.getLowerBoundY() < g.getPosY()) {g.setLowerBoundY(g.getPosY());}
+				System.out.println("top right corner");
 			}
 		}
-		return false;
 	}
 }

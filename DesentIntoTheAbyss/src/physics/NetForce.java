@@ -35,14 +35,11 @@ public class NetForce {
 	
 	/**
 	 * <b>getNetForce</b>
-	 * <p>returns the net force considering all the forces in the hash table (also updates the forces)</p>
+	 * <p>returns the net force considering all the forces in the hash table (does not update)</p>
 	 * @param currentTime the current time (level time)
 	 * @return the net force
 	 */
 	public Force getNetForce(double currentTime) {
-		//updating the forces, for accuracy
-		this.update(currentTime);
-		
 		//declaring and initializing necessary variables
 		double xComp = 0, yComp = 0, duration = Double.MAX_VALUE;
 		Set<String> keys = this.forces.keySet();

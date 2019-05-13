@@ -51,6 +51,9 @@ public class GameMain extends Application{
     		//System.out.println(e.getCode().toString() + " has been removed");
 	    });
 	    
+	    //testing
+	    keyInput.add("RIGHT");
+	    
 	    //start game at the main menu
 		new MenuMain(primaryStage).start();
 		

@@ -2,7 +2,7 @@ package levels;
 
 import java.io.FileNotFoundException;
 
-import gameObjects.Level;
+import framework.Level;
 import gameObjects.Platform;
 import gameObjects.Player;
 import javafx.stage.Stage;
