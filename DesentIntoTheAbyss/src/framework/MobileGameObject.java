@@ -2,7 +2,6 @@ package framework;
 
 import java.io.FileNotFoundException;
 
-import gameObjects.Player;
 import physics.Force;
 import physics.NetForce;
 import physics.Vector;

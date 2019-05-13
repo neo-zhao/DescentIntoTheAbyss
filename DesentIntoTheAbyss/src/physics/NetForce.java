@@ -48,13 +48,15 @@ public class NetForce {
 		for (String key: keys) {
 			Force f = this.forces.get(key);
 			
-			//accumulating x and y components
-			xComp += f.getVector().getxComp();
-			yComp += f.getVector().getyComp();
-			
-			//finding the time left this net force is accurate
-			if ((f.getDuration() + f.getBirthTime() - currentTime) < duration) {
-				duration = f.getDuration() + f.getBirthTime() - currentTime;
+			if (f.getBirthTime() < currentTime) {
+				//accumulating x and y components
+				xComp += f.getVector().getxComp();
+				yComp += f.getVector().getyComp();
+				
+				//finding the time left this net force is accurate
+				if ((f.getDuration() + f.getBirthTime() - currentTime) < duration) {
+					duration = f.getDuration() + f.getBirthTime() - currentTime;
+				}
 			}
 		}
 		

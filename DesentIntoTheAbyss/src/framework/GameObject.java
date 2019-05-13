@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.ImageView;
 import managers.TextureManager;
 import physics.Calculations;
-import physics.Force;
 
 /**
  * <b>GameObject</b>
