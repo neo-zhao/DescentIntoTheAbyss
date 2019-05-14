@@ -39,7 +39,6 @@ public class TotemLevel extends Level{
 		public boolean levelComplete() {
 			if (this.getPlayer().getPosY() >= 849) {
 				new MenuMain(this.getStage()).start();
-				System.out.println("level one over.");
 				return true;
 			}
 			return false;

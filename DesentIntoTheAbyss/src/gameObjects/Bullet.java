@@ -15,6 +15,8 @@ public class Bullet extends MobileGameObject{
 	//variable declarations
 	private boolean viable;
 	
+	
+
 	//*Constructors*//
 	public Bullet(double posX, double posY) throws FileNotFoundException {
 		super("./res/Black.png", posX, posY, 10, 10, true);
@@ -33,6 +35,9 @@ public class Bullet extends MobileGameObject{
 		return viable;
 	}
 	
+	public void setViable(boolean viable) {
+		this.viable = viable;
+	}
 	//*Other Methods*//
 
 	@Override

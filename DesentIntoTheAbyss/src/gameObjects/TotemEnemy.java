@@ -27,7 +27,6 @@ public class TotemEnemy extends GameObject{
 	
 	//Other Methods
 	public void handleCollision(Bullet b) {	
-		//TODO handle when collides with bullet
-		
+		//TODO handle when collides with bullet	
 	}
 }

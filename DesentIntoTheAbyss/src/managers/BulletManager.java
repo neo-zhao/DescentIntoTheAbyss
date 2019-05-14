@@ -52,6 +52,7 @@ public class BulletManager implements PlayerAffectedGameObject, UserAffectedGame
 		for (Bullet b: bullets) {
 			if (!b.isViable()) {
 				bullets.remove(b);
+				System.out.println("Bullet Removed");
 			}
 		}
 	}

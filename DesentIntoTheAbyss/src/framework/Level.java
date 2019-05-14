@@ -99,12 +99,14 @@ public abstract class Level {
 	        	//clears bullets
 	        	for (Bullet b: bulletManager.getBullets()) {
 	        		root.getChildren().remove(b.getImage());
+	        		if(b.getPosX() > maxX) {b.setViable(false);}
 	        	}
 	        	
 	        	//re-adds bullets
 	        	bulletManager.handleInput(t);
 	        	for (Bullet b: bulletManager.getBullets()) {
 	        		root.getChildren().add(b.getImage());
+	        		
 	        		inLevel.add(b);
 	        	}
 	        	
