@@ -24,8 +24,8 @@ public class TutorialLevel extends Level{
 			this.setMaxX(10000);
 			this.setMaxY(900);
 			//creating player
-			//super.setPlayer(new Player("./res/Grey.png", -100, 659, 40, 40));
-			super.setPlayer(new Player("./res/Grey.png", 2800, -1450, 50, 50));
+			super.setPlayer(new Player("./res/Grey.png", -100, 659, 40, 40));
+		
 			//creating game objects
 			
 			//initial bottom platform
