@@ -7,6 +7,7 @@ import java.util.Set;
 import gameObjects.Bullet;
 import gameObjects.Camera;
 import gameObjects.Player;
+import gameObjects.TotemEnemy;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.stage.Stage;
@@ -130,6 +131,10 @@ public abstract class Level {
 	        			
 	        			//update g
 	        			((MobileGameObject) g).update(t);
+	        		}
+	        		
+	        		if(g instanceof TotemEnemy) {
+	        			//TODO handle when collides with bullet
 	        		}
 	        	}
 	        	

@@ -14,7 +14,7 @@ public class GameConstants {
 	public static final double DASH_VELO = MOVE_SPEED * 4;
 	public static final double DASH_BUFFER = .5;
 	public static final double SHOOT_BUFFER = .25;
-	public static final double BULLET_VELO = 5;
+	public static final double BULLET_VELO = 100;
 	
 	//old (possibly useless)
 	public static final int STAGE_WIDTH = 1200;

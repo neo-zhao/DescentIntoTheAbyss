@@ -19,11 +19,12 @@ public class Bullet extends MobileGameObject{
 	public Bullet(double posX, double posY) throws FileNotFoundException {
 		super("./res/Black.png", posX, posY, 10, 10, true);
 		this.viable = true;
-		this.getForces().removeForce("Gravity");
-		//sets velocity
 		
+		//sets velocity	
 		this.getVelocity().setxComp(GameConstants.BULLET_VELO);
 	
+		//makes gravity not affect the bullet
+		this.setAffectedGravity(false);
 		
 	}
 	

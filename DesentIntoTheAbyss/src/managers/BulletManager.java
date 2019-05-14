@@ -41,6 +41,8 @@ public class BulletManager implements PlayerAffectedGameObject, UserAffectedGame
 			lastShot = currentTime;
 			try {
 				this.bullets.add(new Bullet(this.player.getPosX() + this.player.getWidth() +1, this.player.getPosY() + this.player.getHeight()/3));
+				//debugging
+				//System.out.println((this.player.getPosX() + this.player.getWidth() + 1) + " "+ this.player.getPosY() + " "+ this.player.getHeight()/3);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}

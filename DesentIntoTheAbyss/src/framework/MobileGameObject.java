@@ -15,6 +15,7 @@ import physics.Vector;
 public abstract class MobileGameObject extends GameObject{
 	//variable declarations
 	private NetForce forces;
+	public boolean affectedGravity = true; //this was added to see if gravity actually affects an object (bullet)
 	private Vector acceleration, velocity;
 	private double lastTime, lowerBoundY, upperBoundY, lowerBoundX, upperBoundX;
 	public static enum MoveState {inAir, onGround;}
@@ -72,6 +73,9 @@ public abstract class MobileGameObject extends GameObject{
 		this.upperBoundX = xUpper;
 		this.lowerBoundY = yLower;
 		this.upperBoundY = yUpper;
+	}
+	public void setAffectedGravity(boolean affectedGravity) {
+		this.affectedGravity = affectedGravity;
 	}
 	
 	//*Other Methods*//
@@ -133,7 +137,7 @@ public abstract class MobileGameObject extends GameObject{
 		
 		//updating forces
 		this.forces.update(currentTime);
-		if (this.moveState == MoveState.inAir) {
+		if (this.moveState == MoveState.inAir  && affectedGravity) {
 			this.forces.addForce("Gravity", new Force(0, GameConstants.GRAVITY, 0, currentTime));
 		}
 		
