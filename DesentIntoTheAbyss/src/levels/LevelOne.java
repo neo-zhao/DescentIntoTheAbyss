@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import framework.Level;
 import gameObjects.Platform;
 import gameObjects.Player;
+import gameObjects.Spike;
 import javafx.stage.Stage;
 import menus.MenuMain;
 
@@ -24,6 +25,7 @@ public class LevelOne extends Level{
 		//creating player
 		super.setPlayer(new Player("./res/Grey.png", 10, 150, 50, 50));
 		
+
 		//creating game objects
 		super.addGameObject(new Platform(0, 700, 3000, 50));
 		super.addGameObject(new Platform(300, 550, 200, 50));

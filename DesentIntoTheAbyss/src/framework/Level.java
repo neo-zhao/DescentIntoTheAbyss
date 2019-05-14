@@ -7,6 +7,7 @@ import java.util.Set;
 import gameObjects.Bullet;
 import gameObjects.Camera;
 import gameObjects.Player;
+import gameObjects.Spike;
 import gameObjects.TotemEnemy;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -27,6 +28,7 @@ public abstract class Level {
 	private Player player;
 	private Stage stage;
 	private double bufferX, bufferY, minX, maxX, minY, maxY;
+	protected boolean spikeDeath = false;
 	
 	private BulletManager bulletManager;
 	
@@ -135,9 +137,11 @@ public abstract class Level {
 	        			((MobileGameObject) g).update(t);
 	        		}
 	        		
-	        		if(g instanceof TotemEnemy) {
-	        			//TODO handle when collides with bullet
+	        		if(g instanceof Spike) {
+	        			if(((Spike) g).isTouchingPlayer(player))
+	        				spikeDeath = true;
 	        		}
+	        		
 	        	}
 	        	
 	        	//choose if u want the camera to move or not
