@@ -11,7 +11,7 @@ import physics.Force;
 public class Player extends MobileGameObject implements UserAffectedGameObject{
 	//variable declarations
 	boolean inDash, hasDash;
-	double lastDash;
+	double lastDash, inputLock;
 	private enum DashState {None, Down, DownLeft, Left, LeftUp, Up, UpRight, Right, RightDown;}
 	private enum PlayerState{WallSlideLeft, WallSlideRight, WallJump, neither;}
 	private PlayerState playerState;
@@ -33,6 +33,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 		this.hasDash = false;
 		this.lastDash = 0;
 		this.playerState = PlayerState.neither;
+		this.inputLock = 0;
 	}
 
 	//*Getters and Setters*//
@@ -40,6 +41,9 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 	//*Other Methods*//
 	@Override
 	public void handleInput(double currentTime) {
+		//calculates elapsedTime
+		double elapsedTime = currentTime - this.getLastTime();
+		
 		//updates has dash
 		if (this.getMoveState() == MoveState.onGround) {
 			hasDash = true;
@@ -49,13 +53,22 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 		if (this.getForces().getForce("DashLag") == null) {
 			inDash = false;
 		}
-				
+		
+		//updates inputLock
+		inputLock -= elapsedTime;
+		if (inputLock < 0) {
+			inputLock = 0;
+		}
+		
 		//only handles user input if not currently in dash
-		if (!inDash) {
-			//handles basic motion
-			this.handleMoveLeft();
-			this.handleMoveRight();
-			this.handleJump();
+		if (!inDash && inputLock == 0) {
+			//handles basic motion if not in wallJump
+			if (playerState != PlayerState.WallJump) {
+				this.handleMoveLeft();
+				this.handleMoveRight();
+				this.handleJump();
+			}
+			
 			
 			//handles dashing: controlled by has dash (regain by being on ground) and dash buffer
 			this.handleDash(currentTime);
@@ -75,11 +88,11 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 	 */
 	private void handleMoveLeft() {
 		//handles moving left
-		if (GameMain.keyInput.contains("LEFT")) {
-			this.getVelocity().setxComp(-GameConstants.MOVE_SPEED);
+		if (GameMain.keyInput.contains("LEFT") && super.getVelocity().getxComp() == 0) {
+			this.getVelocity().addX(-GameConstants.MOVE_SPEED);
 		}
-		if (!GameMain.keyInput.contains("LEFT")  && this.getVelocity().getxComp() < 0) {
-			this.getVelocity().setxComp(0);
+		if (!GameMain.keyInput.contains("LEFT") && this.getVelocity().getxComp() < 0) {
+			this.getVelocity().addX(GameConstants.MOVE_SPEED);
 		}
 	}
 	
@@ -89,11 +102,11 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 	 */
 	private void handleMoveRight() {
 		//handles moving right
-		if (GameMain.keyInput.contains("RIGHT")) {
-			this.getVelocity().setxComp(GameConstants.MOVE_SPEED);
+		if (GameMain.keyInput.contains("RIGHT") && super.getVelocity().getxComp() == 0) {
+			this.getVelocity().addX(GameConstants.MOVE_SPEED);
 		}
 		if (!GameMain.keyInput.contains("RIGHT") && super.getVelocity().getxComp() > 0) {
-			this.getVelocity().setxComp(0);
+			this.getVelocity().addX(-GameConstants.MOVE_SPEED);
 		}
 	}
 	
@@ -218,20 +231,24 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 	
 	private void handleWallJump() {
 		//if jumping
-		if (GameMain.keyInput.contains("Up")) {
+		if (GameMain.keyInput.contains("UP")) {
 			switch(this.playerState) {
 			case WallSlideLeft:
 				//jump up and right
-				super.getVelocity().setxComp(GameConstants.JUMP_VELO);
+				super.setPosX(this.getPosX() + 10);
+				super.getVelocity().setxComp(GameConstants.MOVE_SPEED);
 				super.getVelocity().setyComp(GameConstants.JUMP_VELO);
 				this.setMoveState(MoveState.inAir);
+				this.inputLock = .5;
 				System.out.println(" Wall Jump left");
 				break;
 			case WallSlideRight:
 				//jump up and left
-				super.getVelocity().setxComp(-GameConstants.JUMP_VELO);
+				super.setPosX(this.getPosX() - 10);
+				super.getVelocity().setxComp(-GameConstants.MOVE_SPEED);
 				super.getVelocity().setyComp(GameConstants.JUMP_VELO);
 				this.setMoveState(MoveState.inAir);
+				this.inputLock = .5;
 				System.out.println(" Wall Jump right");
 				break;
 			default:
