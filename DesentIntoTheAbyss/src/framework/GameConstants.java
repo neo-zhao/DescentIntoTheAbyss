@@ -5,7 +5,7 @@ public class GameConstants {
 	public static final double GRAVITY = 4500;
 	
 	//Level Stuff
-	public static final double BUFFERX = 300;
+	public static final double BUFFERX = 500;
 	public static final double BUFFERY = 300;
 	
 	//player stuff
