@@ -9,9 +9,9 @@ public class GameConstants {
 	public static final double BUFFERY = 300;
 	
 	//player stuff
-	public static final double MOVE_SPEED = 300;
+	public static final double MOVE_SPEED = 400;
 	public static final double JUMP_VELO = -0.3*GRAVITY;
-	public static final double DASH_VELO = MOVE_SPEED * 5;
+	public static final double DASH_VELO = MOVE_SPEED * 4;
 	public static final double DASH_BUFFER = .5;
 	public static final double SHOOT_BUFFER = .25;
 	public static final double BULLET_VELO = 5;

@@ -20,13 +20,13 @@ import managers.BulletManager;
  */
 public abstract class Level {
 	//variable declarations
+	private boolean movableCamera = true;
 	private Set<GameObject> inLevel;
-	private Set<Bullet> playerBullets;
-	
 	private Camera camera;
 	private Player player;
 	private Stage stage;
 	private double bufferX, bufferY, minX, maxX, minY, maxY;
+	
 	private BulletManager bulletManager;
 	
 	//*Constructors*//
@@ -56,6 +56,26 @@ public abstract class Level {
 		this.bulletManager.handlePlayer(player);
 	}
 	public Stage getStage() {return stage;}
+	
+	public void setMovableCamera(boolean movableCamera) {
+		this.movableCamera = movableCamera;
+	}
+	public void setMinX(double minX) {
+		this.minX = minX;
+	}
+
+	public void setMaxX(double maxX) {
+		this.maxX = maxX;
+	}
+
+	public void setMinY(double minY) {
+		this.minY = minY;
+	}
+
+	public void setMaxY(double maxY) {
+		this.maxY = maxY;
+	}
+
 	
 	//*Other Methods*//
 	public void start(Group root) {	
@@ -113,25 +133,27 @@ public abstract class Level {
 	        		}
 	        	}
 	        	
-	        	//moves camera if necessary
-        		if (player.getPosX() > camera.getPosX() + stage.getWidth() - bufferX) {
-        			camera.setPosX(player.getPosX() - stage.getWidth() + bufferX);
-        		}
-        		if (player.getPosX() < camera.getPosX() + bufferX) {
-        			camera.setPosX(player.getPosX() - bufferX);
-        		}
-        		if (player.getPosY() > camera.getPosY() + stage.getHeight() - bufferY) {
-        			camera.setPosY(player.getPosY() - stage.getHeight() + bufferY);
-        		}
-        		if (player.getPosY() < camera.getPosY() + bufferY) {
-        			camera.setPosY(player.getPosY() - bufferY);
-        		}
-        		
-        		//adjusts display of all game objects according to the camera
-        		for (GameObject g: inLevel) {
-        			g.displaceImage(camera.getPosX(), camera.getPosY());
-        		}
-	        	
+	        	//choose if u want the camera to move or not
+	        	if(movableCamera) {
+		        	//moves camera if necessary
+	        		if (player.getPosX() > camera.getPosX() + stage.getWidth() - bufferX) {
+	        			camera.setPosX(player.getPosX() - stage.getWidth() + bufferX);
+	        		}
+	        		if (player.getPosX() < camera.getPosX() + bufferX) {
+	        			camera.setPosX(player.getPosX() - bufferX);
+	        		}
+	        		if (player.getPosY() > camera.getPosY() + stage.getHeight() - bufferY) {
+	        			camera.setPosY(player.getPosY() - stage.getHeight() + bufferY);
+	        		}
+	        		if (player.getPosY() < camera.getPosY() + bufferY) {
+	        			camera.setPosY(player.getPosY() - bufferY);
+	        		}
+	        		
+	        		//adjusts display of all game objects according to the camera
+	        		for (GameObject g: inLevel) {
+	        			g.displaceImage(camera.getPosX(), camera.getPosY());
+	        		}
+	        	}
 	        	//exit game loop once level is complete
 	        	if(levelComplete()) {
 	        		this.stop();

@@ -52,6 +52,7 @@ public abstract class MobileGameObject extends GameObject{
 	}
 
 	//*Getters and Setters*//
+	
 	public NetForce getForces() {return forces;}
 	public Vector getAcceleration() {return acceleration;}
 	public Vector getVelocity() {return velocity;}
