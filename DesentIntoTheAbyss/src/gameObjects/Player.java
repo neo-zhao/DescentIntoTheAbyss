@@ -13,6 +13,8 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 	boolean inDash, hasDash;
 	double lastDash;
 	private enum DashState {None, Down, DownLeft, Left, LeftUp, Up, UpRight, Right, RightDown;}
+	private enum PlayerState{WallSlideLeft, WallSlideRight, WallJump, neither;}
+	private PlayerState playerState;
 	
 	//*Constructors*//
 	/**
@@ -30,6 +32,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 		this.inDash = false;
 		this.hasDash = false;
 		this.lastDash = 0;
+		this.playerState = PlayerState.neither;
 	}
 
 	//*Getters and Setters*//
@@ -57,6 +60,12 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 			//handles dashing: controlled by has dash (regain by being on ground) and dash buffer
 			this.handleDash(currentTime);
 			
+			//handles wall hang and wall jump
+			this.handleWallJump();
+			this.handleWallHang(currentTime);
+			
+			//resets player state
+			this.playerState = PlayerState.neither;
 		}	
 	}	
 	
@@ -177,7 +186,58 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 	
 	@Override
 	protected void handleCollisionAddOn(CollisionState collisionState) {
-		// TODO Auto-generated method stub
+		switch(collisionState) {
+		case left:
+			//initiate wall hang
+			this.playerState = PlayerState.WallSlideLeft;
+			break;
+		case right:
+			//initiate wall hang
+			this.playerState = PlayerState.WallSlideRight;
+			break;
+		default:
+			break;
 		
+		}	
+	}
+	
+	/**
+	 * <b>handleWallHang</b>
+	 * <p>handles wall hang</p>
+	 */
+	private void handleWallHang(double currentTime) {
+		//check if in a hang state
+		if (this.playerState == PlayerState.WallSlideLeft || this.playerState == PlayerState.WallSlideRight) {
+			//negates acceleration due to gravity
+			this.getForces().addForce("WallHangNoGravity", new Force(0, -GameConstants.GRAVITY, 0, currentTime));
+			
+			//adds a milder downward velocity
+			this.getVelocity().setyComp(GameConstants.GRAVITY*0.015);
+		}
+	}
+	
+	private void handleWallJump() {
+		//if jumping
+		if (GameMain.keyInput.contains("Up")) {
+			switch(this.playerState) {
+			case WallSlideLeft:
+				//jump up and right
+				super.getVelocity().setxComp(GameConstants.JUMP_VELO);
+				super.getVelocity().setyComp(GameConstants.JUMP_VELO);
+				this.setMoveState(MoveState.inAir);
+				System.out.println(" Wall Jump left");
+				break;
+			case WallSlideRight:
+				//jump up and left
+				super.getVelocity().setxComp(-GameConstants.JUMP_VELO);
+				super.getVelocity().setyComp(GameConstants.JUMP_VELO);
+				this.setMoveState(MoveState.inAir);
+				System.out.println(" Wall Jump right");
+				break;
+			default:
+				break;
+			}
+			this.playerState = PlayerState.WallJump;
+		}
 	}
 }	

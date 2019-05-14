@@ -43,12 +43,12 @@ public class GameMain extends Application{
 	    theScene.setOnKeyPressed(e -> {
 	    	if (!keyInput.contains(e.getCode().toString())) {
 	    		keyInput.add(e.getCode().toString());
-	    		//System.out.println(e.getCode().toString() + " has been added");
+	    		System.out.println(e.getCode().toString() + " has been added");
 	    	}
 	    });
 	    theScene.setOnKeyReleased(e -> {
 	    	keyInput.remove(e.getCode().toString());
-    		//System.out.println(e.getCode().toString() + " has been removed");
+    		System.out.println(e.getCode().toString() + " has been removed");
 	    });
 	    
 	    //testing

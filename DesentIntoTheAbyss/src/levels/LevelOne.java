@@ -30,6 +30,7 @@ public class LevelOne extends Level{
 		super.addGameObject(new Platform(0, 700, 3000, 50));
 		super.addGameObject(new Platform(300, 550, 200, 50));
 		super.addGameObject(new Platform(500, 200, 200, 50));
+		super.addGameObject(new Platform(1000, 100, 50, 600));
 	}
 
 	@Override

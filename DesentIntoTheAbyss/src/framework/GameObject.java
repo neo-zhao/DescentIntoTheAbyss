@@ -116,18 +116,19 @@ public abstract class GameObject {
 			/*corner cases*/
 			
 			//checks if top left corner is within this object after motion
-			if (Calculations.isBetween(posX, posX+width,g.getPosX() + g.getVelocity().getxComp()*elapsedTime) && 
-					Calculations.isBetween(posY, posY+height, g.getPosY() + g.getVelocity().getyComp()*elapsedTime)) {
-				if (g.getLowerBoundX() < g.getPosX()) {g.setLowerBoundX(g.getPosX());}
-				if (g.getLowerBoundY() < g.getPosY()) {g.setLowerBoundY(g.getPosY());}
-
-			}
-			//checks if top right corner is within this object after motion
-			if (Calculations.isBetween(posX, posX+width, g.getPosX() + g.getWidth() + g.getVelocity().getxComp()*elapsedTime) &&
-					Calculations.isBetween(posY, posY+height, g.getPosY() + g.getVelocity().getyComp()*elapsedTime)) {
-				if (g.getUpperBoundX() > g.getPosX() + g.getWidth()) {g.setUpperBoundX(g.getPosX() + g.getWidth());}
-				if (g.getLowerBoundY() < g.getPosY()) {g.setLowerBoundY(g.getPosY());}
-			}
+//			if (Calculations.isBetween(posX, posX+width,g.getPosX() + g.getVelocity().getxComp()*elapsedTime) && 
+//					Calculations.isBetween(posY, posY+height, g.getPosY() + g.getVelocity().getyComp()*elapsedTime)) {
+//				if (g.getLowerBoundX() < g.getPosX()) {g.setLowerBoundX(g.getPosX());}
+//				if (g.getLowerBoundY() < g.getPosY()) {g.setLowerBoundY(g.getPosY());}
+//				//System.out.println("top left corner");
+//			}
+//			//checks if top right corner is within this object after motion
+//			if (Calculations.isBetween(posX, posX+width, g.getPosX() + g.getWidth() + g.getVelocity().getxComp()*elapsedTime) &&
+//					Calculations.isBetween(posY, posY+height, g.getPosY() + g.getVelocity().getyComp()*elapsedTime)) {
+//				if (g.getUpperBoundX() > g.getPosX() + g.getWidth()) {g.setUpperBoundX(g.getPosX() + g.getWidth());}
+//				if (g.getLowerBoundY() < g.getPosY()) {g.setLowerBoundY(g.getPosY());}
+//				//System.out.println("top right corner");
+//			}
 		}
 	}
 }
