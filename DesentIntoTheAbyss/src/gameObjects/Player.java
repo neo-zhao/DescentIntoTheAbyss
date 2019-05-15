@@ -172,7 +172,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 					break;
 				case Left:
 					this.getVelocity().setxComp(-GameConstants.DASH_VELO);
-					//this.getForces().addForce("DashLag", new Force(GameConstants.DASH_VELO, 0, 1, t));
+					this.getForces().addForce("DashLag", new Force(0, 0, 1, t));
 					break;
 				case LeftUp:
 					this.getVelocity().setxComp(-GameConstants.DASH_VELO*Math.sqrt(2)/2);
@@ -181,7 +181,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 					break;
 				case Right:
 					this.getVelocity().setxComp(GameConstants.DASH_VELO);
-					//this.getForces().addForce("DashLag", new Force(-GameConstants.DASH_VELO, 0, 1, t));
+					this.getForces().addForce("DashLag", new Force(0, 0, 1, t));
 					break;
 				case RightDown:
 					this.getVelocity().setxComp(GameConstants.DASH_VELO*Math.sqrt(2)/2);
