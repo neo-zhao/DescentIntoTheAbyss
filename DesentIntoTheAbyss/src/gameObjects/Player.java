@@ -60,6 +60,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 			inputLock = 0;
 		}
 		
+		
 		//only handles user input if not currently in dash
 		if (!inDash && inputLock == 0) {
 			//handles basic motion if not in wallJump
@@ -92,7 +93,12 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 			this.getVelocity().addX(-GameConstants.MOVE_SPEED);
 		}
 		if (!GameMain.keyInput.contains("LEFT") && this.getVelocity().getxComp() < 0) {
-			this.getVelocity().addX(GameConstants.MOVE_SPEED);
+			if (this.getVelocity().getxComp() + GameConstants.MOVE_SPEED > 0) {
+				this.getVelocity().setxComp(0);
+			}
+			else {
+				this.getVelocity().addX(GameConstants.MOVE_SPEED);
+			}
 		}
 	}
 	
@@ -106,7 +112,12 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 			this.getVelocity().addX(GameConstants.MOVE_SPEED);
 		}
 		if (!GameMain.keyInput.contains("RIGHT") && super.getVelocity().getxComp() > 0) {
-			this.getVelocity().addX(-GameConstants.MOVE_SPEED);
+			if (this.getVelocity().getxComp() - GameConstants.MOVE_SPEED < 0) {
+				this.getVelocity().setxComp(0);
+			}
+			else {
+				this.getVelocity().addX(-GameConstants.MOVE_SPEED);
+			}
 		}
 	}
 	
@@ -155,36 +166,36 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 					this.getForces().addForce("DashLag", new Force(0, -GameConstants.DASH_VELO, 1, t));
 					break;
 				case DownLeft:
-					this.getVelocity().setxComp(-GameConstants.DASH_VELO*Math.sqrt(2)*4);
+					this.getVelocity().setxComp(-GameConstants.DASH_VELO*Math.sqrt(2)/2);
 					this.getVelocity().setyComp(GameConstants.DASH_VELO*Math.sqrt(2)/2);
-					this.getForces().addForce("DashLag", new Force(GameConstants.DASH_VELO*Math.sqrt(2)/2, -GameConstants.DASH_VELO*Math.sqrt(2)/2, 1, t));
+					this.getForces().addForce("DashLag", new Force(0, -GameConstants.DASH_VELO*Math.sqrt(2)/2, 1, t));
 					break;
 				case Left:
-					this.getVelocity().setxComp(-GameConstants.DASH_VELO*8);
-					this.getForces().addForce("DashLag", new Force(GameConstants.DASH_VELO, 0, 1, t));
+					this.getVelocity().setxComp(-GameConstants.DASH_VELO);
+					//this.getForces().addForce("DashLag", new Force(GameConstants.DASH_VELO, 0, 1, t));
 					break;
 				case LeftUp:
-					this.getVelocity().setxComp(-GameConstants.DASH_VELO*Math.sqrt(2)*4);
+					this.getVelocity().setxComp(-GameConstants.DASH_VELO*Math.sqrt(2)/2);
 					this.getVelocity().setyComp(-GameConstants.DASH_VELO*Math.sqrt(2)/2);
-					this.getForces().addForce("DashLag", new Force(GameConstants.DASH_VELO*Math.sqrt(2)/2, GameConstants.DASH_VELO*Math.sqrt(2)/2, 1, t));
+					this.getForces().addForce("DashLag", new Force(0, GameConstants.DASH_VELO*Math.sqrt(2)/2, 1, t));
 					break;
 				case Right:
-					this.getVelocity().setxComp(GameConstants.DASH_VELO*8);
-					this.getForces().addForce("DashLag", new Force(-GameConstants.DASH_VELO, 0, 1, t));
+					this.getVelocity().setxComp(GameConstants.DASH_VELO);
+					//this.getForces().addForce("DashLag", new Force(-GameConstants.DASH_VELO, 0, 1, t));
 					break;
 				case RightDown:
-					this.getVelocity().setxComp(GameConstants.DASH_VELO*Math.sqrt(2)*4);
+					this.getVelocity().setxComp(GameConstants.DASH_VELO*Math.sqrt(2)/2);
 					this.getVelocity().setyComp(GameConstants.DASH_VELO*Math.sqrt(2)/2);
-					this.getForces().addForce("DashLag", new Force(-GameConstants.DASH_VELO*Math.sqrt(2)/2, -GameConstants.DASH_VELO*Math.sqrt(2)/2, 1, t));
+					this.getForces().addForce("DashLag", new Force(0, -GameConstants.DASH_VELO*Math.sqrt(2)/2, 1, t));
 					break;
 				case Up:
 					this.getVelocity().setyComp(-GameConstants.DASH_VELO);
-					this.getForces().addForce("DashLag", new Force(GameConstants.DASH_VELO, 0, 1, t));
+					this.getForces().addForce("DashLag", new Force(0, GameConstants.DASH_VELO, 1, t));
 					break;
 				case UpRight:
-					this.getVelocity().setxComp(GameConstants.DASH_VELO*Math.sqrt(2)*4);
+					this.getVelocity().setxComp(GameConstants.DASH_VELO*Math.sqrt(2)/2);
 					this.getVelocity().setyComp(-GameConstants.DASH_VELO*Math.sqrt(2)/2);
-					this.getForces().addForce("DashLag", new Force(-GameConstants.DASH_VELO*Math.sqrt(2)/2, GameConstants.DASH_VELO*Math.sqrt(2)/2, 1, t));
+					this.getForces().addForce("DashLag", new Force(0, GameConstants.DASH_VELO*Math.sqrt(2)/2, 1, t));
 					break;
 				default:
 					break;
