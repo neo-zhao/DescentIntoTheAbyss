@@ -250,7 +250,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 				super.getVelocity().setxComp(GameConstants.MOVE_SPEED);
 				super.getVelocity().setyComp(GameConstants.JUMP_VELO);
 				this.setMoveState(MoveState.inAir);
-				this.inputLock = .5;
+				this.inputLock = .3;
 				System.out.println(" Wall Jump left");
 				break;
 			case WallSlideRight:
@@ -259,7 +259,7 @@ public class Player extends MobileGameObject implements UserAffectedGameObject{
 				super.getVelocity().setxComp(-GameConstants.MOVE_SPEED);
 				super.getVelocity().setyComp(GameConstants.JUMP_VELO);
 				this.setMoveState(MoveState.inAir);
-				this.inputLock = .5;
+				this.inputLock = .3;
 				System.out.println(" Wall Jump right");
 				break;
 			default:
